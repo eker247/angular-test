@@ -1,0 +1,17 @@
+<div *ngIf="!isFullScreen">
+  <img 
+    *ngFor="let img of images" 
+    src="{{img.img}}" 
+    style="width: 100px;" 
+    (click)="onImageClick(img)"
+  />
+</div>
+<div>
+  <img 
+    id="imgWindow"
+    *ngIf="chosenImage"
+    src="{{chosenImage.img}}" 
+    (click)="imgFullScreen()"
+    style="width: 30%;"
+  />
+</div>
