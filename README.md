@@ -11,8 +11,39 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
+First Step:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Change in index.html:
+remove <base href="/">
+
+######################
+
+Second Step:
+
+Change in app.module.ts:
+
+import { CommonModule, APP_BASE_HREF, LocationStrategy, HashLocationStrategy} from '@angular/common';
+
+@NgModule({
+   providers: [
+       { provide: APP_BASE_HREF, useValue: '/' },
+       { provide: LocationStrategy, useClass: HashLocationStrategy }
+   ]
+})
+
+######################
+
+Third Step:
+
+Run the command
+
+ng build
+or
+
+ng build --prod --aot
+Doubleclick dist/index.html to see the result.
+
+######################
 
 ## Running unit tests
 

@@ -1,3 +1,4 @@
+import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,11 +12,11 @@ import 'mousetrap';
 import { ModalGalleryModule } from '@ks89/angular-modal-gallery';
 
 import { AppComponent } from './app.component';
-import { Md1Component } from './md1/md1.component';
-import { GalleryComponent } from './foto/gallery/gallery.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AmgalleryComponent } from './amgallery/amgallery.component';
-import { ProductListComponent } from './product-list/product-list.component';
+import { Md1Component } from './component/md1/md1.component';
+import { GalleryComponent } from './component/foto/gallery/gallery.component';
+import { AmgalleryComponent } from './component/amgallery/amgallery.component';
+import { ProductListComponent } from './component/product-list/product-list.component';
 
 const routes: Routes = [
   { path: 'ekgallery', component: GalleryComponent },
@@ -41,7 +42,10 @@ const routes: Routes = [
       RouterModule.forRoot(routes),
       ModalGalleryModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

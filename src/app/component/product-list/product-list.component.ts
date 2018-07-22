@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Product } from '../model/product';
-import { ProductService } from '../service/product.service';
-import { Subscription, of, Observable } from 'rxjs';
-import { Image } from '../model/image';
+import { Product } from '../../model/product';
+import { ProductService } from '../../service/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -10,8 +8,8 @@ import { Image } from '../model/image';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  
-  products: Product[];
+
+  productsNames: string[];
 
   constructor(private productService: ProductService) { }
 
@@ -19,13 +17,13 @@ export class ProductListComponent implements OnInit {
     this.getProductsNames();
   }
 
-  getProductsNames() {
+  getProductsNames(): void {
     this.productService.getProductsNames().subscribe(
-      pr => this.products = pr
+      pr => this.productsNames = pr
     );  
   }
 
-  chooseProduct(product: Product): void {
-    this.productService.chooseProduct(product);
+  chooseProduct(productName: string): void {
+    this.productService.chooseProduct(productName);
   }
 }

@@ -21,15 +21,17 @@ export class ProductMockServer {
 
     constructor() { }
 
-    getProductsNames(): Product[] {
-        let names = new Array<Product>();
+    getProductsNames(): string[] {
+        let names = new Array<string>();
         this.products.forEach(item => {
-            names.push(new Product(item.name));
+            names.push(item.name);
         });
         return names;
     }
 
-    getProductDetails(product: Product) {
-        return this.products.find((item: Product) => item.name == product.name);
+    getProductDetails(productName: string): Product {
+        // alert("mock: productName: " + productName);
+        let prod = this.products.find((item: Product) => item.name == productName);
+        return prod;
     }
 }

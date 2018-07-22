@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Image } from '../../model/image';
-import { ImagesService } from '../../service/images.service';
-import { Product } from '../../model/product';
-import { ProductMockServer } from '../../mock-server/product-mock';
-import { ProductService } from '../../service/product.service';
+import { Image } from '@ks89/angular-modal-gallery';
+import { Product } from '../../../model/product';
+import { ProductService } from '../../../service/product.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,45 +11,37 @@ import { Subscription } from 'rxjs';
 })
 export class GalleryComponent implements OnInit {
   chosenProduct: Product;
-  images = new Array<Image>();
+  images: Image[];
   chosenImage: Image;
   isFullScreen: boolean;
   currentWidth: string;
   smallImgViewer: string = "20%";
   bigImgViewer: string = "100%";
-  subscription: Subscription;
+  imageSubscription: Subscription;
 
   constructor(
-    private imagesService: ImagesService,
     private productService: ProductService
   ) { }
 
   ngOnInit() {
+    this.images = [];
     this.isFullScreen = false;
     this.currentWidth = "200";
-    this.getSubscribe();
+    this.getImageSubscription();
+    this.getImages();
   }
 
-  getSubscribe() {
-    this.subscription = this.productService.chosenProduct$.subscribe(
-      it => {
-        // alert("working with " + it.name);
-        this.images = [];
-        it.img.forEach(
-          (i: string) => {
-            this.images.push(new Image(it.name, i));
-          }
-        );
-        // alert(" fetched in gallery component");
-      }
+  getImageSubscription() {
+    this.imageSubscription = this.productService.chosenProduct$.subscribe(
+      it => this.images = it
     );
   }
-
 
   getImages(): void {
-    this.imagesService.getImages().subscribe(
-      images => this.images = images
-    );
+    if (this.images.length || !this.productService.chosenProduct) {
+      return;
+    }
+    this.productService.getImages().subscribe(images => this.images = images);
   }
 
   onImageClick(img: Image): void {
@@ -74,5 +64,9 @@ export class GalleryComponent implements OnInit {
     else {
       document.getElementById("imgWindow").style.width = this.smallImgViewer;
     }
+  }
+
+  ngOnDestroy() {
+    this.imageSubscription.unsubscribe();
   }
 }
