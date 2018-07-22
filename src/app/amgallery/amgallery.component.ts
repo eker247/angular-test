@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Image as Img }  from '../image';
+import { Image as Img }  from '../model/image';
 import {
   // AccessibilityConfig,
   // Action,
@@ -23,7 +23,7 @@ import {
 
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { VERSION } from '@angular/forms';
-import { ImagesService } from '../images.service';
+import { ImagesService } from '../service/images.service';
 
 @Component({
   selector: 'app-amgallery',

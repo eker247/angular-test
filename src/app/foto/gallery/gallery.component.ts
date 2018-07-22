@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Image } from '../../image';
-import { ImagesService } from '../../images.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Image } from '../../model/image';
+import { ImagesService } from '../../service/images.service';
+import { Product } from '../../model/product';
+import { ProductMockServer } from '../../mock-server/product-mock';
+import { ProductService } from '../../service/product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gallery',
@@ -8,23 +12,41 @@ import { ImagesService } from '../../images.service';
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements OnInit {
-
-
-  images: Image[];
+  chosenProduct: Product;
+  images = new Array<Image>();
   chosenImage: Image;
   isFullScreen: boolean;
   currentWidth: string;
   smallImgViewer: string = "20%";
   bigImgViewer: string = "100%";
+  subscription: Subscription;
 
-  constructor(private imagesService: ImagesService) { 
-    this.getImages();
-  }
+  constructor(
+    private imagesService: ImagesService,
+    private productService: ProductService
+  ) { }
 
   ngOnInit() {
     this.isFullScreen = false;
     this.currentWidth = "200";
+    this.getSubscribe();
   }
+
+  getSubscribe() {
+    this.subscription = this.productService.chosenProduct$.subscribe(
+      it => {
+        // alert("working with " + it.name);
+        this.images = [];
+        it.img.forEach(
+          (i: string) => {
+            this.images.push(new Image(it.name, i));
+          }
+        );
+        // alert(" fetched in gallery component");
+      }
+    );
+  }
+
 
   getImages(): void {
     this.imagesService.getImages().subscribe(

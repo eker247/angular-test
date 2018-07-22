@@ -15,6 +15,7 @@ import { Md1Component } from './md1/md1.component';
 import { GalleryComponent } from './foto/gallery/gallery.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AmgalleryComponent } from './amgallery/amgallery.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 const routes: Routes = [
   { path: 'ekgallery', component: GalleryComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
     AppComponent,
     Md1Component,
     GalleryComponent,
-    AmgalleryComponent
+    AmgalleryComponent,
+    ProductListComponent
   ],
   imports: [
       BrowserModule,
