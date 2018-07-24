@@ -6,6 +6,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule, Routes } from '@angular/router';
+import { DragulaModule } from 'ng2-dragula';
 
 import 'hammerjs';
 import 'mousetrap';
@@ -17,10 +18,12 @@ import { Md1Component } from './component/md1/md1.component';
 import { GalleryComponent } from './component/foto/gallery/gallery.component';
 import { AmgalleryComponent } from './component/amgallery/amgallery.component';
 import { ProductListComponent } from './component/product-list/product-list.component';
+import { DragulaTestComponent } from './component/dragula-test/dragula-test.component';
 
 const routes: Routes = [
   { path: 'ekgallery', component: GalleryComponent },
-  { path: 'amgallery', component: AmgalleryComponent }
+  { path: 'amgallery', component: AmgalleryComponent },
+  { path: 'dragula', component: DragulaTestComponent },
 ];
 
 @NgModule({
@@ -29,7 +32,8 @@ const routes: Routes = [
     Md1Component,
     GalleryComponent,
     AmgalleryComponent,
-    ProductListComponent
+    ProductListComponent,
+    DragulaTestComponent
   ],
   imports: [
       BrowserModule,
@@ -39,8 +43,9 @@ const routes: Routes = [
       MatCheckboxModule,
       MatInputModule,
       AppRoutingModule,
+      ModalGalleryModule.forRoot(),
+      DragulaModule.forRoot(),
       RouterModule.forRoot(routes),
-      ModalGalleryModule.forRoot()
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
