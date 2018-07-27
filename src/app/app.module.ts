@@ -19,12 +19,8 @@ import { GalleryComponent } from './component/foto/gallery/gallery.component';
 import { AmgalleryComponent } from './component/amgallery/amgallery.component';
 import { ProductListComponent } from './component/product-list/product-list.component';
 import { DragulaTestComponent } from './component/dragula-test/dragula-test.component';
-
-const routes: Routes = [
-  { path: 'ekgallery', component: GalleryComponent },
-  { path: 'amgallery', component: AmgalleryComponent },
-  { path: 'dragula', component: DragulaTestComponent },
-];
+import { CustomerListComponent } from './customers/customer-list/customer-list.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -44,8 +40,7 @@ const routes: Routes = [
       MatInputModule,
       AppRoutingModule,
       ModalGalleryModule.forRoot(),
-      DragulaModule.forRoot(),
-      RouterModule.forRoot(routes),
+      DragulaModule.forRoot()
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
