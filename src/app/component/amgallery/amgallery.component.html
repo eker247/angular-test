@@ -1,2 +1,6 @@
-<ks-modal-gallery [id]="1" [modalImages]="images"
+<app-product-list></app-product-list>
+<ks-modal-gallery *ngIf="images.length" [id]="1" [modalImages]="images"
   [plainGalleryConfig]="plainGalleryRow"></ks-modal-gallery>
+<div *ngIf="!images.length">
+  Wybierz produkt
+</div>

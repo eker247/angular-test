@@ -1,0 +1,7 @@
+<nav>
+  <button *ngFor="let ml of menuLinks" 
+    class={{ml.mlClass}} 
+    routerLink={{ml.mlLink}}
+    (click)="choose(ml)"
+    >{{ml.mlName}}</button>
+</nav>

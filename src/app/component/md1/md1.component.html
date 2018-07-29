@@ -1,3 +1,44 @@
-<p>
-  md1 works!
-</p>
+<h1>md1 works</h1>
+
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Tytuł karty</mat-card-title>
+    <mat-card-subtitle>Podtytuł</mat-card-subtitle>
+  </mat-card-header>
+  
+  
+  <mat-card-content>
+    Jakaś treść
+    <mat-form-field>
+      <input matInput/>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="action1('akcja')">Akcja</button>
+    <mat-checkbox (click)="action1('checkbox')">Etykieta</mat-checkbox>
+  </mat-card-actions>
+  <mat-card-footer>
+    Stopka
+  </mat-card-footer>
+</mat-card>

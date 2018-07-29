@@ -21,7 +21,7 @@ export class AmgalleryComponent implements OnInit {
   
   imageIndex = 1;
   galleryId = 1;
-  images: Image[];
+  public images: Image[];
   showImgNumber = Number.MAX_SAFE_INTEGER;
   imageSubscription: Subscription;
   name: string;

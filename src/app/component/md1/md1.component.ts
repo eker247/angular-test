@@ -12,4 +12,7 @@ export class Md1Component implements OnInit {
   ngOnInit() {
   }
 
+  action1(str: string) {
+    alert("clicked " + str);
+  }
 }

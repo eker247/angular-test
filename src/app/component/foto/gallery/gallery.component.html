@@ -1,4 +1,8 @@
-<div>
+<app-product-list *ngIf="!isFullScreen"></app-product-list>
+<div *ngIf="!images.length">
+  Wybierz produkt
+</div>
+<div *ngIf="images.length">
   <div *ngIf="!isFullScreen">
     <img 
       *ngFor="let img of images" 

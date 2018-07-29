@@ -3,12 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
-import { MatInputModule } from '@angular/material/input';
-import { RouterModule, Routes } from '@angular/router';
+
 import { DragulaModule } from 'ng2-dragula';
 
-import 'hammerjs';
 import 'mousetrap';
 import { ModalGalleryModule } from '@ks89/angular-modal-gallery';
 
@@ -21,6 +18,18 @@ import { ProductListComponent } from './component/product-list/product-list.comp
 import { DragulaTestComponent } from './component/dragula-test/dragula-test.component';
 import { CustomerListComponent } from './customers/customer-list/customer-list.component';
 import { OrderListComponent } from './orders/order-list/order-list.component';
+import { MenuComponent } from './menu/menu.component';
+import { HomeComponent } from './home/home.component';
+import { MdTableComponent } from './component/md-table/md-table.component';
+import { 
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatCheckbox,
+} from '@angular/material';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -29,18 +38,25 @@ import { OrderListComponent } from './orders/order-list/order-list.component';
     GalleryComponent,
     AmgalleryComponent,
     ProductListComponent,
-    DragulaTestComponent
+    DragulaTestComponent,
+    MenuComponent,
+    HomeComponent,
+    Md1Component,
+    MdTableComponent
   ],
   imports: [
       BrowserModule,
       BrowserAnimationsModule,
       NoopAnimationsModule,
-      MatButtonModule,
-      MatCheckboxModule,
-      MatInputModule,
       AppRoutingModule,
       ModalGalleryModule.forRoot(),
-      DragulaModule.forRoot()
+      DragulaModule.forRoot(),
+      MatTableModule,
+      MatPaginatorModule,
+      MatSortModule,
+      MatCardModule,
+      MatCheckboxModule,
+      MatInputModule
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
