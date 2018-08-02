@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { Md1Component } from './component/md1/md1.component';
 import { MatTab } from '@angular/material';
 import { MdTableComponent } from './component/md-table/md-table.component';
+import { MdtabfilterComponent } from './component/mdtabfilter/mdtabfilter.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'orders', loadChildren: './orders/orders.module#OrdersModule' },                     // relative path
   { path: 'material', component: Md1Component },
   { path: 'mdtab', component: MdTableComponent },
+  { path: 'mdtabfilter', component: MdtabfilterComponent },
 ];
 
 @NgModule({

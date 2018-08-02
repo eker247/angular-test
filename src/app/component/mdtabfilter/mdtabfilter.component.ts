@@ -1,33 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {VERSION} from '@angular/material';
 import {MatTableDataSource} from '@angular/material';
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.css']
+  selector: 'material-app',
+  templateUrl: 'mdtabfilter.component.html'
 })
-export class OrderListComponent implements OnInit {
+export class MdtabfilterComponent implements OnInit {
   version = VERSION;
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource;
+  tab = new MatTableDataSource();
 
-  constructor() {
+  constructor() { }
+
+  ngOnInit() {
+    this.tab.filterPredicate = (filter: string) => {
+      return true;
+    }
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.filterPredicate = (data, filter) => {
       const dataStr = data.position + data.details.name + data.details.symbol + data.details.weight;
       return dataStr.indexOf(filter) != -1; 
     }
   }
 
-  ngOnInit() {
-
-  }
-
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
   }
 }
-
 
 export interface Element {
   position: number;

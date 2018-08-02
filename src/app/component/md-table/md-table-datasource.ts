@@ -1,6 +1,6 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
@@ -8,6 +8,10 @@ export interface MdTableItem {
   shortcut: string;
   name: string;
   id: number;
+}
+
+function mergeItem(mit: MdTableItem) {
+  return mit.id + mit.name.trim().toLowerCase() + mit.shortcut.trim().toLowerCase();
 }
 
 // TODO: replace this with real data from your application
@@ -41,6 +45,7 @@ const EXAMPLE_DATA: MdTableItem[] = [
  */
 export class MdTableDataSource extends DataSource<MdTableItem> {
   data: MdTableItem[] = EXAMPLE_DATA;
+
   filter: string;
 
   constructor(private paginator: MatPaginator, private sort: MatSort) {
@@ -103,7 +108,9 @@ export class MdTableDataSource extends DataSource<MdTableItem> {
       }
     });
   }
+
 }
+
 
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
 function compare(a, b, isAsc) {
