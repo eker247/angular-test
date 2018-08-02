@@ -15,7 +15,8 @@ export class MenuComponent implements OnInit {
     { mlLink: '/customers', mlName: 'customers', mlClass: 'btn' },
     { mlLink: '/orders', mlName: 'orders', mlClass: 'btn' },
     { mlLink: '/material', mlName: 'material', mlClass: 'btn' },
-    { mlLink: '/mdtab', mlName: 'mdTable', mlClass: 'btn' },
+    { mlLink: '/mdtab', mlName: 'mdTable1', mlClass: 'btn' },
+    { mlLink: '/mdtab2', mlName: 'mdTable2', mlClass: 'btn' },
   ];
 
   constructor() { }

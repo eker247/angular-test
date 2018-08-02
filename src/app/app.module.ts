@@ -30,6 +30,7 @@ import {
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
+import { Mdtab2Component } from './component/mdtab2/mdtab2.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {MatInputModule} from '@angular/material/input';
     MenuComponent,
     HomeComponent,
     Md1Component,
-    MdTableComponent
+    MdTableComponent,
+    Mdtab2Component
   ],
   imports: [
       BrowserModule,
