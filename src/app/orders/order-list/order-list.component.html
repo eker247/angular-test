@@ -1,45 +1,51 @@
 <h3>Read about nested forms: https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2</h3>
 
-<form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
-  <!-- we will place our fields here -->
-
-  <!-- name -->
+<form [formGroup]="myform" (ngSubmit)="submit(myform)">
   <div class="form-group">
-    <label>Name</label>
-    <input type="text" formControlName="name">
-    <!--display error message if name is not valid-->
-    <small *ngIf="!myForm.controls.name.valid" class="text-danger">
-      Name is required (minimum 5 characters).
-    </small>
+    <label for="word1">Word 1:</label>
+    <input type="text" formControlName="word1" placeholder="word1">
   </div>
-    <!-- list of addresses -->
-    <div formArrayName="addresses">
-      <div *ngFor="let address of myForm.controls.addresses.controls; let i=index">
-        <!-- address header, show remove button when more than one address available -->
-        <div>
-          <span>Address {{i + 1}}</span>
-          <span *ngIf="myForm.controls.addresses.controls.length > 1" (click)="removeAddress(i)">
-          </span>
-        </div>
-        <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
-        <div [formGroupName]="i">
-          <!--street-->
-          <div>
-            <label>street</label>
-            <input type="text" formControlName="street">
-            <!--display error message if street is not valid-->
-            <small [hidden]="myForm.controls.addresses.controls[i].controls.street.valid">
-              Street is required
-            </small>
-          </div>
-          <!--postcode-->
-          <div>
-            <label>postcode</label>
-            <input type="text" formControlName="postcode">
-          </div>
-        </div>
-      <button type="submit" [disabled]="!myForm.valid">Submit</button>
+  <div *ngIf="!myform.controls.word1.valid && myform.controls.word1.touched" class="alert alert-info">
+      Complete word2
     </div>
-    <button (click)="addAddress()">Add Address</button>
+
+  <div formArrayName="level1">
+    <div *ngFor="let l of myform.controls.level1.controls; let i = index">
+      <div [formGroupName]="i">
+        <div class="form-group">
+          <label for="word2">Word 2:</label>
+          <input type="text" formControlName="word2" placeholder="word2">
+          <span class="btn btn-danger" (click)="rmLevel(myform, 1, i)">X</span>
+        </div>
+        <div *ngIf="!i.valid && i.touched" class="alert alert-info">
+          Complete word2
+        </div>
+
+          <div formArrayName="level2">
+            <div *ngFor="let l2 of l.controls.level2.controls; let j = index">
+              <div [formGroupName]="j">
+                <div class="form-group">
+                  <label for="word3">Word 3:</label>
+                  <input type="text" formControlName="word3" placeholder="word3">
+                  <span class="btn btn-danger" (click)="rmLevel(l, 2, j)">X</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+
+      <div class="form-group">
+        <span class="btn btn-info" (click)="addLevel(l, 2)">Add Level 2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <span class="btn btn-info" (click)="addLevel(myform, 1)">Add Level 1</span>
+    <button class="btn btn-success">Send Form</button>
+  </div>
+  <div class="alert alert-danger" *ngIf="!myform.valid && myform.touched">
+    Some fields are required!
   </div>
 </form>

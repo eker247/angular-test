@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 
-export interface Customer {
-  name: string; // required field with minimum 5 characters
-  addresses: Address[]; // user can have one or more addresses
+export interface Imyform {
+  word1: string;
+  level1: IL1[];
 }
 
-export interface Address {
-  street: string;  // required field
-  postcode: string;
+export interface IL1 {
+  word2: string;
+  level2: IL2[];
+}
+
+export interface IL2 {
+  word3: string;
 }
 
 @Component({
@@ -17,42 +21,65 @@ export interface Address {
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent implements OnInit {
-  public myForm: FormGroup; // our form model
+  public myform: FormGroup; // our myform model
 
-  // we will use form builder to simplify our syntax
+  // we will use myform builder to simplify our syntax
   constructor(private _fb: FormBuilder) { }
 
   ngOnInit() {
-    this.myForm = this._fb.group({
-      name: ['', [Validators.required, Validators.minLength(5)]],
-      addresses: this._fb.array([
-          this.initAddress(),
-        ])
+    this.init1();
+  }
+
+  init1() {
+    this.myform = this._fb.group({
+      word1: ['', Validators.required],
+      level1: this._fb.array([
+        this.init2()
+      ])
     });
   }
 
-  initAddress() {
-    // initialize our address
+  init2() {
     return this._fb.group({
-        street: ['', Validators.required],
-        postcode: ['']
+      word2: [],
+      level2: this._fb.array([
+        this.init3()
+      ])
     });
   }
 
-  addAddress() {
-    // add address to the list
-    const control = <FormArray>this.myForm.controls['addresses'];
-    control.push(this.initAddress());
+  init3() {
+    return this._fb.group({
+      word3: []
+    });
   }
 
-  removeAddress(i: number) {
-    // remove address from the list
-    const control = <FormArray>this.myForm.controls['addresses'];
-    control.removeAt(i);
+  addLevel(l, num) {
+    const ctrl = <FormArray>l.controls['level' + num];
+    if (num === 1) {
+      ctrl.push(this.init2());
+    } else {
+      ctrl.push(this.init3());
+    }
   }
 
-  save(model: Customer) {
-    // call API to save customer
-    console.log(model);
+  rmLevel(l, num, iter) {
+    const ctrl = <FormArray>l.controls['level' + num];
+    ctrl.removeAt(iter);
+  }
+
+  submit(myform) {
+    const imf: Imyform = myform.value;
+    console.log(imf);
+  }
+
+  show(form: Imyform) {
+    console.log('w1: ' + form.word1);
+    form.level1.forEach(l1 => {
+      console.log('w2: ' + l1.word2);
+      l1.level2.forEach(l2 => {
+        console.log(l2.word3);
+      });
+    });
   }
 }
