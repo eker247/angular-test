@@ -84,6 +84,15 @@ export class OrderListComponent implements OnInit {
   }
 }
 
+export interface Element {
+  position: number;
+  details: {
+    name: string;
+    weight: number;
+    symbol: string;
+  };
+}
+
 const ELEMENT_DATA: Element[] = [
   {position: 1, details: { name: 'Hydrogen', weight: 1.0079, symbol: 'H'}},
   {position: 2, details: { name: 'Helium', weight: 4.0026, symbol: 'He'}},
