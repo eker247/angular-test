@@ -1,6 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {VERSION} from '@angular/material';
-import {MatTableDataSource} from '@angular/material';
+import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
+
+export interface Imyform {
+  word1: string;
+  level1: IL1[];
+}
+
+export interface IL1 {
+  word2: string;
+  level2: IL2[];
+}
+
+export interface IL2 {
+  word3: string;
+}
 
 @Component({
   selector: 'app-order-list',
@@ -8,36 +21,67 @@ import {MatTableDataSource} from '@angular/material';
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent implements OnInit {
-  version = VERSION;
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  public myform: FormGroup; // our myform model
 
-  constructor() {
-    this.dataSource.filterPredicate = (data, filter) => {
-      const dataStr = data.position + data.details.name + data.details.symbol + data.details.weight;
-      return dataStr.indexOf(filter) != -1; 
+  // we will use myform builder to simplify our syntax
+  constructor(private _fb: FormBuilder) { }
+
+  ngOnInit() {
+    this.init1();
+  }
+
+  init1() {
+    this.myform = this._fb.group({
+      word1: ['', Validators.required],
+      level1: this._fb.array([
+        this.init2()
+      ])
+    });
+  }
+
+  init2() {
+    return this._fb.group({
+      word2: [],
+      level2: this._fb.array([
+        this.init3()
+      ])
+    });
+  }
+
+  init3() {
+    return this._fb.group({
+      word3: []
+    });
+  }
+
+  addLevel(l, num) {
+    const ctrl = <FormArray>l.controls['level' + num];
+    if (num === 1) {
+      ctrl.push(this.init2());
+    } else {
+      ctrl.push(this.init3());
     }
   }
 
-  ngOnInit() {
-
+  rmLevel(l, num, iter) {
+    const ctrl = <FormArray>l.controls['level' + num];
+    ctrl.removeAt(iter);
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue;
+  submit(myform) {
+    const imf: Imyform = myform.value;
+    console.log(imf);
   }
-}
 
-
-export interface Element {
-  position: number;
-  details: ElementDetails;
-}
-
-export interface ElementDetails {
-  name: string;  
-  weight: number;
-  symbol: string;
+  show(form: Imyform) {
+    console.log('w1: ' + form.word1);
+    form.level1.forEach(l1 => {
+      console.log('w2: ' + l1.word2);
+      l1.level2.forEach(l2 => {
+        console.log(l2.word3);
+      });
+    });
+  }
 }
 
 const ELEMENT_DATA: Element[] = [

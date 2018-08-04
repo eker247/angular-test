@@ -1,11 +1,11 @@
 import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator, MatSort } from '@angular/material';
-import { map, filter } from 'rxjs/operators';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
 export interface MdTableItem {
-  shortcut: string;
+  symbol: string;
   name: string;
   id: number;
 }
@@ -16,26 +16,26 @@ function mergeItem(mit: MdTableItem) {
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: MdTableItem[] = [
-  {id: 1, name: 'Hydrogen', shortcut: 'H'},
-  {id: 2, name: 'Helium', shortcut: 'He'},
-  {id: 3, name: 'Lithium', shortcut: 'Li'},
-  {id: 4, name: 'Beryllium', shortcut: 'Be'},
-  {id: 5, name: 'Boron', shortcut: 'Bo'},
-  {id: 6, name: 'Carbon', shortcut: 'C'},
-  {id: 7, name: 'Nitrogen', shortcut: 'N'},
-  {id: 8, name: 'Oxygen', shortcut: 'O'},
-  {id: 9, name: 'Fluorine', shortcut: 'F'},
-  {id: 10, name: 'Neon', shortcut: 'Ne'},
-  {id: 11, name: 'Sodium', shortcut: 'Na'},
-  {id: 12, name: 'Magnesium', shortcut: 'Mg'},
-  {id: 13, name: 'Aluminum', shortcut: 'Al'},
-  {id: 14, name: 'Silicon', shortcut: 'Si'},
-  {id: 15, name: 'Phosphorus', shortcut: 'Ph'},
-  {id: 16, name: 'Sulfur', shortcut: 'S'},
-  {id: 17, name: 'Chlorine', shortcut: 'Cl'},
-  {id: 18, name: 'Argon', shortcut: 'Ar'},
-  {id: 19, name: 'Potassium', shortcut: 'K'},
-  {id: 20, name: 'Calcium', shortcut: 'Ca'},
+  {id: 1, name: 'Hydrogen', symbol: 'H'},
+  {id: 2, name: 'Helium', symbol: 'He'},
+  {id: 3, name: 'Lithium', symbol: 'Li'},
+  {id: 4, name: 'Beryllium', symbol: 'Be'},
+  {id: 5, name: 'Boron', symbol: 'Bo'},
+  {id: 6, name: 'Carbon', symbol: 'C'},
+  {id: 7, name: 'Nitrogen', symbol: 'N'},
+  {id: 8, name: 'Oxygen', symbol: 'O'},
+  {id: 9, name: 'Fluorine', symbol: 'F'},
+  {id: 10, name: 'Neon', symbol: 'Ne'},
+  {id: 11, name: 'Sodium', symbol: 'Na'},
+  {id: 12, name: 'Magnesium', symbol: 'Mg'},
+  {id: 13, name: 'Aluminum', symbol: 'Al'},
+  {id: 14, name: 'Silicon', symbol: 'Si'},
+  {id: 15, name: 'Phosphorus', symbol: 'Ph'},
+  {id: 16, name: 'Sulfur', symbol: 'S'},
+  {id: 17, name: 'Chlorine', symbol: 'Cl'},
+  {id: 18, name: 'Argon', symbol: 'Ar'},
+  {id: 19, name: 'Potassium', symbol: 'K'},
+  {id: 20, name: 'Calcium', symbol: 'Ca'},
 ];
 
 /**
@@ -44,12 +44,15 @@ const EXAMPLE_DATA: MdTableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class MdTableDataSource extends DataSource<MdTableItem> {
-  data: MdTableItem[] = EXAMPLE_DATA;
-
   filter: string;
-
+  data = new MatTableDataSource(EXAMPLE_DATA);
+  
   constructor(private paginator: MatPaginator, private sort: MatSort) {
     super();
+    this.data.filterPredicate = (data, filter) => {
+      let str = data.id + data.name.trim().toLowerCase() + data.symbol.trim().toLowerCase();
+      return str.includes(filter);
+    } 
   }
 
   /**
@@ -67,10 +70,10 @@ export class MdTableDataSource extends DataSource<MdTableItem> {
     ];
 
     // Set the paginators length
-    this.paginator.length = this.data.length;
+    this.paginator.length = this.data.data.length;
 
     return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
+      return this.getPagedData(this.getSortedData([...this.data.data]));
     }));
   }
 
@@ -102,7 +105,7 @@ export class MdTableDataSource extends DataSource<MdTableItem> {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
         case 'name': return compare(a.name, b.name, isAsc);
-        case 'shortcut': return compare(a.shortcut, b.shortcut, isAsc);
+        case 'symbol': return compare(a.symbol, b.symbol, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
         default: return 0;
       }

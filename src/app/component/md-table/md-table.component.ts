@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { MdTableDataSource } from './md-table-datasource';
-import { DataSource } from '@angular/cdk/collections';
+import { DataSource } from '../../../../node_modules/@angular/cdk/table';
 
-export class Test {
+export class Item {
   value: string;
-  constructor(s: string = '') {
-    this.value = s;
+  constructor(str: string) {
+    this.value = str;
   }
 }
 
@@ -21,7 +21,7 @@ export class MdTableComponent implements OnInit {
   dataSource: MdTableDataSource;
   filter: string;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'shortcut'];
+  displayedColumns = ['id', 'name', 'symbol'];
 
   ngOnInit() {
     let tab: Test[] = [
@@ -43,5 +43,6 @@ export class MdTableComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource = new MdTableDataSource(this.paginator, this.sort);
   }
 }
