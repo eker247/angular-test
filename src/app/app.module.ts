@@ -31,6 +31,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import { Mdtab2Component } from './component/mdtab2/mdtab2.component';
+import { EventsComponent } from './component/events/events.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { Mdtab2Component } from './component/mdtab2/mdtab2.component';
     HomeComponent,
     Md1Component,
     MdTableComponent,
-    Mdtab2Component
+    Mdtab2Component,
+    EventsComponent
   ],
   imports: [
       BrowserModule,
