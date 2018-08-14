@@ -9,6 +9,7 @@ export class MenuComponent implements OnInit {
 
   menuLinks: menuLink[] = [
     { mlLink: '', mlName: 'home', mlClass: 'btn' },
+    { mlLink: '/events', mlName: 'events', mlClass: 'btn' },
     { mlLink: '/ekgallery', mlName: 'ekgallery', mlClass: 'btn' },
     { mlLink: '/amgallery', mlName: 'amgallery', mlClass: 'btn' },
     { mlLink: '/dragula', mlName: 'dragula', mlClass: 'btn' },
